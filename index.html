@@ -72,23 +72,23 @@
 </head>
 <body>
     <form>
-        <input type="number" id="productId" placeholder="Enter Product ID">
-        <input type="text" id="productName" placeholder="Enter Product Name">
-        <input type="number" id="productQuantity" placeholder="Enter Quantity">
-        <input type="number" id="productPrice" placeholder="Enter Product Price">
-        <button type="button" onclick="addProduct()">Add Product</button>
+        <input type="number" id="productId" placeholder="Enter Product ID" required>
+        <input type="text" id="productName" placeholder="Enter Product Name" required>
+        <input type="number" id="productQuantity" placeholder="Enter Quantity"required>
+        <input type="number" id="productPrice" placeholder="Enter Product Price" required>
+        <button type="submit" onclick="addProduct()">Add Product</button>
     </form>
     <form>
-        <input type="number" id="deleteProductId" placeholder="Enter Product ID to Delete">
-        <button type="button" onclick="deleteProduct()">Delete Product</button>
+        <input type="number" id="deleteProductId" placeholder="Enter Product ID to Delete" required>
+        <button type="submit" onclick="deleteProduct()">Delete Product</button>
     </form>
     <form>
         <!-- <input type="number" id="updateId" placeholder="Enter ID to Update"> -->
-        <input type="number" id="updateProductId" placeholder="Enter Product ID">
-        <input type="text" id="updateProductName" placeholder="Enter Product Name">
-        <input type="number" id="updateProductPrice" placeholder="Enter Product Price">
-        <input type="number" id="updateProductQuantity" placeholder="Enter Stock">
-        <button type="button" onclick="updateProduct()">Update Product</button>
+        <input type="number" id="updateProductId" placeholder="Enter Product ID" required>
+        <input type="text" id="updateProductName" placeholder="Enter Product Name"required>
+        <input type="number" id="updateProductPrice" placeholder="Enter Product Price" required>
+        <input type="number" id="updateProductQuantity" placeholder="Enter Stock" required>
+        <button type="submit" onclick="updateProduct()">Update Product</button>
     </form>
     <div class="container"></div>
 
