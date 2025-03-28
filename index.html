@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Cards</title>
     <style>
-        body {
+         body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -14,6 +14,13 @@
             background-color: #f5f5f5;
             margin: 0;
             padding: 20px;
+        }
+        .flexx {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         .container {
             display: flex;
@@ -31,14 +38,6 @@
             width: 250px;
             text-align: center;
         }
-        .card h3 {
-            margin: 10px 0;
-            color: #333;
-        }
-        .card p {
-            margin: 5px 0;
-            color: #666;
-        }
         form {
             display: flex;
             flex-direction: column;
@@ -48,7 +47,6 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 300px;
-            margin-bottom: 20px;
         }
         form input {
             padding: 10px;
@@ -71,110 +69,125 @@
     </style>
 </head>
 <body>
-    <form>
-        <input type="number" id="productId" placeholder="Enter Product ID" required>
-        <input type="text" id="productName" placeholder="Enter Product Name" required>
-        <input type="number" id="productQuantity" placeholder="Enter Quantity"required>
-        <input type="number" id="productPrice" placeholder="Enter Product Price" required>
-        <button type="submit" onclick="addProduct()">Add Product</button>
-    </form>
-    <form>
-        <input type="number" id="deleteProductId" placeholder="Enter Product ID to Delete" required>
-        <button type="submit" onclick="deleteProduct()">Delete Product</button>
-    </form>
-    <form>
-        <!-- <input type="number" id="updateId" placeholder="Enter ID to Update"> -->
-        <input type="number" id="updateProductId" placeholder="Enter Product ID" required>
-        <input type="text" id="updateProductName" placeholder="Enter Product Name"required>
-        <input type="number" id="updateProductPrice" placeholder="Enter Product Price" required>
-        <input type="number" id="updateProductQuantity" placeholder="Enter Stock" required>
-        <button type="submit" onclick="updateProduct()">Update Product</button>
-    </form>
+
+    <div class="flexx">
+        <form onsubmit="addProduct(event)">
+            <input type="number" id="productId" placeholder="Enter Product ID" required>
+            <input type="text" id="productName" placeholder="Enter Product Name" required>
+            <input type="number" id="productQuantity" placeholder="Enter Quantity" required>
+            <input type="number" id="productPrice" placeholder="Enter Product Price" required>
+            <button type="submit">Add Product</button>
+        </form>
+
+        <form onsubmit="deleteProduct(event)">
+            <input type="text" id="deleteProductId" placeholder="Enter Product ID to Delete" required>
+            <button type="submit">Delete Product</button>
+        </form>
+
+        <form onsubmit="updateProduct(event)">
+            <input type="number" id="updateProductId" placeholder="Enter Product ID" required>
+            <input type="text" id="updateProductName" placeholder="Enter Product Name" required>
+            <input type="number" id="updateProductPrice" placeholder="Enter Product Price" required>
+            <input type="number" id="updateProductQuantity" placeholder="Enter Stock" required>
+            <button type="submit">Update Product</button>
+        </form>
+    </div>
+
     <div class="container"></div>
 
     <script>
-       
-        
         async function getdata() {
+            let container = document.querySelector(".container");
+            container.innerHTML = ""; 
+
             let data = await fetch("https://json-serverr.onrender.com/data");
             let res = await data.json();
-            console.log(res);
-            let container = document.querySelector(".container");
+
             res.forEach((val) => {
                 container.innerHTML += `
                     <div class="card">
-                        <h3>${val.name}</h3>
+                        <h3>Id:${val.id}</h3>
+                        <h3>Name:${val.name}</h3>
+
                         <p>Price: ${val.price}</p>
                         <p>Quantity: ${val.quantity}</p>
                     </div>`;
             });
         }
         getdata();
-        async function addProduct(){
-            
-            let id=document.querySelector("#productId").value
-        let name=document.querySelector("#productName").value
-        let price=document.querySelector("#productPrice").value
-        let quantity=document.querySelector("#productQuantity").value
-       
-        console.log(id)
-        console.log(name)
-        console.log(price)
 
-        let obj={
-            id:id,
-            name:name,
-            price:price,
-            quantity:quantity
+        async function addProduct(event) {
+            event.preventDefault(); 
 
-        }
-        let response = await fetch("https://json-serverr.onrender.com/data", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(obj),
-    });
-         
-        }
-        async function deleteProduct()
-        {
-           let del=document.getElementById("deleteProductId").value
-           console.log(del)
-            let data=await fetch(`https://json-serverr.onrender.com/data/${del}`,{
-                method:"DELETE"
-            })
+            let id = document.querySelector("#productId").value;
+            let name = document.querySelector("#productName").value;
+            let price = document.querySelector("#productPrice").value;
+            let quantity = document.querySelector("#productQuantity").value;
 
-        }
-        async function updateProduct()
-        {
-            let updateForm = document.querySelector("form:nth-of-type(3)").value
-// let updateId = document.querySelector("#updateId").value
-let updateProductId = document.querySelector("#updateProductId").value
-let updateProductName = document.querySelector("#updateProductName").value
-let updateProductPrice = document.querySelector("#updateProductPrice").value
-let updateProductQuantity = document.querySelector("#updateProductQuantity").value
-// let updateButton = updateForm.querySelector("button").value
-let objupdate={
-            id:updateProductId,
-            name:updateProductName,
-            price:  updateProductPrice ,
-            quantity:updateProductQuantity
+            let obj = { id, name, price, quantity };
 
+            let response = await fetch("https://json-serverr.onrender.com/data", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(obj),
+            });
+
+            if (response.ok) {
+                alert("Product added successfully!");
+                event.target.reset();
+                getdata();
+            } else {
+                alert("Failed to add product");
+            }
         }
 
-console.log(updateForm, updateProductId, updateProductName, updateProductPrice, updateProductQuantity);
+        async function deleteProduct(event) {
+            event.preventDefault(); 
 
-    
+            let del = document.getElementById("deleteProductId").value;
+
+            let response = await fetch(`https://json-serverr.onrender.com/data/${del}`, {
+                method: "DELETE"
+            });
+
+            if (response.ok) {
+                alert("Product deleted successfully!"); 
+                event.target.reset();
+                getdata();
+            } else {
+                alert("Failed to delete product. Make sure the ID exists!");
+            }
+        }
+
+        async function updateProduct(event) {
+            event.preventDefault(); 
+
+            let updateProductId = document.querySelector("#updateProductId").value;
+            let updateProductName = document.querySelector("#updateProductName").value;
+            let updateProductPrice = document.querySelector("#updateProductPrice").value;
+            let updateProductQuantity = document.querySelector("#updateProductQuantity").value;
+
+            let objupdate = {
+                id: updateProductId,
+                name: updateProductName,
+                price: updateProductPrice,
+                quantity: updateProductQuantity
+            };
+
             let response = await fetch(`https://json-serverr.onrender.com/data/${updateProductId}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(objupdate),
-    });
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(objupdate),
+            });
+
+            if (response.ok) {
+                alert("Product updated successfully!"); 
+                event.target.reset();
+                getdata();
+            } else {
+                alert("Failed to update product. Check the ID!");
+            }
         }
-        
     </script>
 </body>
 </html>
