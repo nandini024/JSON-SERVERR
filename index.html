@@ -46,7 +46,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 290px;
         }
         form input {
             padding: 10px;
@@ -69,9 +69,12 @@
     </style>
 </head>
 <body>
+    <h1>PRODUCT MANAGEMENT</h1>
 
     <div class="flexx">
+      
         <form onsubmit="addProduct(event)">
+            <h2>Add Product</h2>
             <input type="number" id="productId" placeholder="Enter Product ID" required>
             <input type="text" id="productName" placeholder="Enter Product Name" required>
             <input type="number" id="productQuantity" placeholder="Enter Quantity" required>
@@ -80,11 +83,13 @@
         </form>
 
         <form onsubmit="deleteProduct(event)">
+            <h2>Delete Product</h2>
             <input type="text" id="deleteProductId" placeholder="Enter Product ID to Delete" required>
             <button type="submit">Delete Product</button>
         </form>
 
         <form onsubmit="updateProduct(event)">
+            <h2>Update Product</h2>
             <input type="number" id="updateProductId" placeholder="Enter Product ID" required>
             <input type="text" id="updateProductName" placeholder="Enter Product Name" required>
             <input type="number" id="updateProductPrice" placeholder="Enter Product Price" required>
