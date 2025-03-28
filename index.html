@@ -96,7 +96,7 @@
        
         
         async function getdata() {
-            let data = await fetch("http://localhost:3000/data");
+            let data = await fetch("https://json-serverr.onrender.com/data");
             let res = await data.json();
             console.log(res);
             let container = document.querySelector(".container");
@@ -128,7 +128,7 @@
             quantity:quantity
 
         }
-        let response = await fetch("http://localhost:3000/data", {
+        let response = await fetch("https://json-serverr.onrender.com/data", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -141,7 +141,7 @@
         {
            let del=document.getElementById("deleteProductId").value
            console.log(del)
-            let data=await fetch(`http://localhost:3000/data/${del}`,{
+            let data=await fetch(`https://json-serverr.onrender.com/data/${del}`,{
                 method:"DELETE"
             })
 
@@ -166,7 +166,7 @@ let objupdate={
 console.log(updateForm, updateProductId, updateProductName, updateProductPrice, updateProductQuantity);
 
     
-            let response = await fetch(`http://localhost:3000/data/${updateProductId}`, {
+            let response = await fetch(`https://json-serverr.onrender.com/data/${updateProductId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
